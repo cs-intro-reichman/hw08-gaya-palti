@@ -49,10 +49,9 @@ class PlayList {
     public String toString() {
         String tracksList = "";
         for (int i = 0; i <= tracks.length; i++){
-            tracksList += this.track[i];
+            tracksList += this.tracks[i].toString();
         }
         return tracksList;
-        //understand how to do
     }
 
     /** Removes the last track from this list. If the list is empty, does nothing. */
@@ -67,7 +66,7 @@ class PlayList {
     public int totalDuration() {
         int sum = 0;
         for (int i = 0; i <= tracks.length; i++){
-            sum += Track.getDuration(tracks[i]); // how to do it?
+            sum += this.tracks[i].getDuration(); 
         }
             return sum;
     }
@@ -76,7 +75,7 @@ class PlayList {
      *  If such a track is not found, returns -1. */
     public int indexOf(String title) {
         for (int i = 0; i < this.size; i++){
-            if (Track.getTitle().equals(title){
+            if (title.equals(this.tracks[i].getTitle())){
                 return i;
             }
         }
@@ -90,22 +89,38 @@ class PlayList {
      *  is full, does nothing and returns false. Otherwise, inserts the track and
      *  returns true. */
     public boolean add(int i, Track track) {
-        //// replace the following statement with your code
-        return false;
+        if ( this.size == this.maxSize || i < 0){
+            return false;
+        }
+        for(int j = this.size; j >= i; j--){
+            this.tracks[j + 1] = this.tracks[j];
+        }
+        tracks[i] = track;
+        size ++;
+        return true;
     }
      
     /** Removes the track in the given index from this list.
      *  If the list is empty, or the given index is negative or too big for this list, 
      *  does nothing and returns -1. */
     public void remove(int i) {
-        //// replace this comment with your code
+        if (this.size != 0 && i < 0 && i >= maxSize){
+            tracks[i] = null;
+        } 
+        for(int j = i ; j < this.size; j++){
+            this.tracks[j - 1] = this.tracks[j];
+        }
     }
 
     /** Removes the first track that has the given title from this list.
      *  If such a track is not found, or the list is empty, or the given index
      *  is negative or too big for this list, does nothing. */
     public void remove(String title) {
-        //// replace this comment with your code
+        int trackIndex = indexOf(title);
+        if (trackIndex != -1 && size != 0 && trackIndex < 0 && trackIndex >= maxSize){
+            remove(trackIndex);
+        }
+        
     }
 
     /** Removes the first track from this list. If the list is empty, does nothing. */
