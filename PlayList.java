@@ -65,7 +65,7 @@ class PlayList {
     /** Returns the total duration (in seconds) of all the tracks in this list.*/
     public int totalDuration() {
         int sum = 0;
-        for (int i = 0; i <= tracks.length; i++){
+        for (int i = 0; i < this.size; i++){
             sum += this.tracks[i].getDuration(); 
         }
             return sum;
@@ -104,12 +104,14 @@ class PlayList {
      *  If the list is empty, or the given index is negative or too big for this list, 
      *  does nothing and returns -1. */
     public void remove(int i) {
-        if (this.size != 0 && i < 0 && i >= maxSize){
-            tracks[i] = null;
+        if (this.size == 0 || i < 0 || i >= maxSize){
+            return;
         } 
-        for(int j = i ; j < this.size; j++){
+        for(int j = i + 1 ; j <= this.size; j++){
             this.tracks[j - 1] = this.tracks[j];
         }
+        this.size --;
+        this.tracks[this.size] = null;
     }
 
     /** Removes the first track that has the given title from this list.
@@ -146,12 +148,12 @@ class PlayList {
      *  If start is negative or greater than size - 1, returns -1.
      */
     private int minIndex(int start) {
-        if (start < 0 || start > this.size) {
+        if (start < 0 || start >= this.size) {
             return -1;
         }
         int shortestTrack = Integer.MAX_VALUE;
         int minIndex = 0;
-        for (int i = start; i <= size; i++){
+        for (int i = start; i < size; i++){
             if(tracks[i].getDuration() < shortestTrack){
                 shortestTrack = tracks[i].getDuration();
                 minIndex = i;
