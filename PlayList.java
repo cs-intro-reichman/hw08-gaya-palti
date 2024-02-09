@@ -178,15 +178,11 @@ class PlayList {
         // calling the minIndex method in each iteration.
         int minIn = 0;
         Track minTrack = null;
-        for (int i = 0; i <= size; i++){
+        for (int i = 0; i < size; i++){
             minIn = this.minIndex(i);
             minTrack = this.tracks[minIn];
-            if (this.add(i, minTrack)){
-                remove(i);
-            }
-
-        
-
+            this.remove(minIn);
+            this.add(i, minTrack);
         }
     }
 }
