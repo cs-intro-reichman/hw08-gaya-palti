@@ -150,15 +150,22 @@ class PlayList {
             return -1;
         }
         int shortestTrack = Integer.MAX_VALUE;
+        int minIndex = 0;
         for (int i = start; i <= size; i++){
-            if((i) <= shortestTrack) // how to add the get duration
+            if(tracks[i].getDuration() < shortestTrack){
+                shortestTrack = tracks[i].getDuration();
+                minIndex = i;
+            }
         }
-        return 0;
+        return minIndex;
     }
 
     /** Returns the title of the shortest track in this list. 
      *  If the list is empty, returns null. */
     public String titleOfShortestTrack() {
+        if (this.size == 0) {
+            return null;
+        }
         return tracks[minIndex(0)].getTitle();
     }
 
@@ -169,6 +176,17 @@ class PlayList {
     public void sortedInPlace() {
         // Uses the selection sort algorithm,  
         // calling the minIndex method in each iteration.
-        //// replace this statement with your code
+        int minIn = 0;
+        Track minTrack = null;
+        for (int i = 0; i <= size; i++){
+            minIn = this.minIndex(i);
+            minTrack = this.tracks[minIn];
+            if (this.add(i, minTrack)){
+                remove(i);
+            }
+
+        
+
+        }
     }
 }
